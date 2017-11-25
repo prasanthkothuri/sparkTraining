@@ -1,0 +1,13 @@
+import scala.math.random
+
+val slices = 2
+val n = 100000 * slices
+val rdd = sc.parallelize(1 to n, slices)
+val sample = rdd.map { i =>
+val x = random
+val y = random
+if (x*x + y*y < 1) 1 else 0
+}
+val count = sample.reduce(_ + _)
+println("Pi is roughly " + 4.0 * count / n)
+
